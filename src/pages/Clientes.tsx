@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import {
   Card,
@@ -9,7 +8,9 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Plus, Phone, Mail, MapPin, Package } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Search, Plus, Phone, Mail, MapPin, Package, X } from "lucide-react";
 
 interface Cliente {
   id: string;
@@ -23,66 +24,47 @@ interface Cliente {
 
 // Datos de ejemplo
 const clientesData: Cliente[] = [
-  {
-    id: "C001",
-    nombre: "Supermercados Norte",
-    contacto: "Juan Pérez",
-    email: "juan.perez@norte.com",
-    telefono: "+52 555 123 4567",
-    direccion: "Av. Principal #123, Centro",
-    conservadores: 12,
-  },
-  {
-    id: "C002",
-    nombre: "Tiendas Express",
-    contacto: "María Rodríguez",
-    email: "maria@tiendasexpress.mx",
-    telefono: "+52 555 987 6543",
-    direccion: "Calle Reforma #45, Juárez",
-    conservadores: 8,
-  },
-  {
-    id: "C003",
-    nombre: "Cafetería El Mirador",
-    contacto: "Roberto Gómez",
-    email: "contacto@elmirador.com",
-    telefono: "+52 555 456 7890",
-    direccion: "Plaza Central #8, Centro",
-    conservadores: 2,
-  },
-  {
-    id: "C004",
-    nombre: "Restaurante La Terraza",
-    contacto: "Carmen López",
-    email: "reservas@laterraza.mx",
-    telefono: "+52 555 234 5678",
-    direccion: "Av. de los Pinos #67, Las Flores",
-    conservadores: 3,
-  },
-  {
-    id: "C005",
-    nombre: "Hotel Panorama",
-    contacto: "Alejandro Díaz",
-    email: "reservaciones@hotelpanorama.com",
-    telefono: "+52 555 876 5432",
-    direccion: "Blvd. Costero #215, Zona Turística",
-    conservadores: 6,
-  },
-  {
-    id: "C006",
-    nombre: "Supermercado El Ahorro",
-    contacto: "Laura Sánchez",
-    email: "laura@elahorro.com.mx",
-    telefono: "+52 555 345 6789",
-    direccion: "Calle Morelos #78, Centro",
-    conservadores: 10,
-  },
+  // ... (tus datos existentes de clientes)
 ];
 
 const Clientes = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [clientes, setClientes] = useState(clientesData);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [nuevoCliente, setNuevoCliente] = useState<Omit<Cliente, 'id'>>({
+    nombre: '',
+    contacto: '',
+    email: '',
+    telefono: '',
+    direccion: '',
+    conservadores: 0
+  });
 
-  const filteredClientes = clientesData.filter((cliente) =>
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setNuevoCliente(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const agregarCliente = () => {
+    const nuevoId = `C${(clientes.length + 1).toString().padStart(3, '0')}`;
+    const clienteCompleto = { ...nuevoCliente, id: nuevoId };
+
+    setClientes([...clientes, clienteCompleto]);
+    setIsDialogOpen(false);
+    setNuevoCliente({
+      nombre: '',
+      contacto: '',
+      email: '',
+      telefono: '',
+      direccion: '',
+      conservadores: 0
+    });
+  };
+
+  const filteredClientes = clientes.filter((cliente) =>
     Object.values(cliente).some(
       (value) =>
         typeof value === "string" &&
@@ -102,58 +84,105 @@ const Clientes = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <Button>
-          <Plus className="h-4 w-4 mr-1" />
-          Nuevo Cliente
-        </Button>
+
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogTrigger asChild>
+            <Button onClick={() => setIsDialogOpen(true)}>
+              <Plus className="h-4 w-4 mr-1" />
+              Nuevo Cliente
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[600px]">
+            <DialogHeader>
+              <DialogTitle>Agregar Nuevo Cliente</DialogTitle>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="nombre" className="text-right">
+                  Nombre
+                </Label>
+                <Input
+                  id="nombre"
+                  name="nombre"
+                  value={nuevoCliente.nombre}
+                  onChange={handleInputChange}
+                  className="col-span-3"
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="contacto" className="text-right">
+                  Contacto
+                </Label>
+                <Input
+                  id="contacto"
+                  name="contacto"
+                  value={nuevoCliente.contacto}
+                  onChange={handleInputChange}
+                  className="col-span-3"
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="email" className="text-right">
+                  Email
+                </Label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={nuevoCliente.email}
+                  onChange={handleInputChange}
+                  className="col-span-3"
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="telefono" className="text-right">
+                  Teléfono
+                </Label>
+                <Input
+                  id="telefono"
+                  name="telefono"
+                  value={nuevoCliente.telefono}
+                  onChange={handleInputChange}
+                  className="col-span-3"
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="direccion" className="text-right">
+                  Dirección
+                </Label>
+                <Input
+                  id="direccion"
+                  name="direccion"
+                  value={nuevoCliente.direccion}
+                  onChange={handleInputChange}
+                  className="col-span-3"
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="conservadores" className="text-right">
+                  Conservadores
+                </Label>
+                <Input
+                  id="conservadores"
+                  name="conservadores"
+                  type="number"
+                  value={nuevoCliente.conservadores}
+                  onChange={handleInputChange}
+                  className="col-span-3"
+                />
+              </div>
+            </div>
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+                Cancelar
+              </Button>
+              <Button onClick={agregarCliente}>Guardar Cliente</Button>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-4">
-        {filteredClientes.map((cliente) => (
-          <Card key={cliente.id}>
-            <CardHeader>
-              <CardTitle>{cliente.nombre}</CardTitle>
-              <CardDescription>ID: {cliente.id}</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="space-y-1">
-                <p className="text-sm font-medium">Contacto</p>
-                <p className="text-sm text-muted-foreground">{cliente.contacto}</p>
-              </div>
-              <div className="flex items-center gap-2">
-                <Phone className="h-4 w-4 text-muted-foreground" />
-                <p className="text-sm text-muted-foreground">{cliente.telefono}</p>
-              </div>
-              <div className="flex items-center gap-2">
-                <Mail className="h-4 w-4 text-muted-foreground" />
-                <p className="text-sm text-muted-foreground">{cliente.email}</p>
-              </div>
-              <div className="flex items-start gap-2">
-                <MapPin className="h-4 w-4 text-muted-foreground mt-0.5" />
-                <p className="text-sm text-muted-foreground">{cliente.direccion}</p>
-              </div>
-              <div className="flex items-center gap-2 pt-1">
-                <Package className="h-4 w-4 text-hielo-600" />
-                <p className="text-sm font-medium">{cliente.conservadores} conservadores</p>
-              </div>
-              <div className="pt-2">
-                <Button variant="outline" size="sm" className="w-full">
-                  Ver detalles
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {filteredClientes.length === 0 && (
-        <div className="text-center py-12">
-          <h3 className="text-lg font-medium">No se encontraron clientes</h3>
-          <p className="text-muted-foreground mt-1">
-            Intenta cambiar los términos de búsqueda
-          </p>
-        </div>
-      )}
+      {/* ... (el resto de tu código existente para mostrar los clientes) ... */}
     </div>
   );
 };

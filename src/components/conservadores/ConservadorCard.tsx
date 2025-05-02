@@ -1,88 +1,123 @@
-
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { MapPin, QrCode, Wrench, FileText } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { FileText, Calendar, MapPin, User, HardDrive } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
-export interface ConservadorData {
+interface ConservadorData {
   id: string;
   modelo: string;
   capacidad: string;
   cliente: string;
   ubicacion: string;
-  estado: "activo" | "mantenimiento" | "inactivo";
+  estado: string;
   ultimoMantenimiento: string;
 }
 
-interface ConservadorCardProps {
-  conservador: ConservadorData;
-}
+export function ConservadorCard({ conservador }: { conservador: ConservadorData }) {
+  const [showDetails, setShowDetails] = useState(false);
 
-export function ConservadorCard({ conservador }: ConservadorCardProps) {
-  const navigate = useNavigate();
-  
-  const getStatusColor = (estado: string) => {
-    switch (estado) {
+  const getStatusVariant = () => {
+    switch (conservador.estado) {
       case "activo":
-        return "bg-green-100 text-green-800 hover:bg-green-200";
+        return "default";
       case "mantenimiento":
-        return "bg-yellow-100 text-yellow-800 hover:bg-yellow-200";
+        return "secondary";
       case "inactivo":
-        return "bg-red-100 text-red-800 hover:bg-red-200";
+        return "destructive";
       default:
-        return "bg-gray-100 text-gray-800 hover:bg-gray-200";
+        return "outline";
     }
   };
 
-  const handleQrClick = () => {
-    // Navigate to QR page with conservador ID pre-filled
-    navigate(`/qr?id=${conservador.id}`);
-  };
-
   return (
-    <Card className="overflow-hidden">
-      <CardHeader className="pb-2">
-        <div className="flex justify-between items-start">
-          <CardTitle className="text-lg">Conservador #{conservador.id}</CardTitle>
-          <Badge className={getStatusColor(conservador.estado)}>
-            {conservador.estado.charAt(0).toUpperCase() + conservador.estado.slice(1)}
-          </Badge>
-        </div>
-        <CardDescription>{conservador.modelo}</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-3 pb-2">
-        <div>
-          <p className="font-medium text-sm">Capacidad</p>
-          <p className="text-sm text-muted-foreground">{conservador.capacidad}</p>
-        </div>
-        <div>
-          <p className="font-medium text-sm">Cliente</p>
-          <p className="text-sm text-muted-foreground">{conservador.cliente}</p>
-        </div>
-        <div className="flex items-start gap-2">
-          <MapPin className="h-4 w-4 text-muted-foreground mt-0.5" />
-          <p className="text-sm text-muted-foreground">{conservador.ubicacion}</p>
-        </div>
-        <div>
-          <p className="font-medium text-sm">Último mantenimiento</p>
-          <p className="text-sm text-muted-foreground">{conservador.ultimoMantenimiento}</p>
-        </div>
-      </CardContent>
-      <CardFooter className="flex justify-between pt-2">
-        <Button variant="outline" size="sm" className="w-full">
-          <FileText className="h-4 w-4 mr-1" />
-          Detalles
-        </Button>
-        <div className="flex gap-2">
-          <Button variant="outline" size="icon" onClick={handleQrClick}>
-            <QrCode className="h-4 w-4" />
+    <>
+      <Card className="hover:shadow-md transition-shadow">
+        <CardHeader className="pb-3">
+          <div className="flex justify-between items-start">
+            <CardTitle className="text-lg">{conservador.modelo}</CardTitle>
+            <Badge variant={getStatusVariant()}>
+              {conservador.estado.toUpperCase()}
+            </Badge>
+          </div>
+          <div className="text-sm text-muted-foreground">
+            ID: {conservador.id} | {conservador.capacidad}
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-2">
+          <div className="flex items-center gap-2 text-sm">
+            <User className="h-4 w-4 text-muted-foreground" />
+            <span>{conservador.cliente}</span>
+          </div>
+          <div className="flex items-center gap-2 text-sm">
+            <MapPin className="h-4 w-4 text-muted-foreground" />
+            <span className="line-clamp-1">{conservador.ubicacion}</span>
+          </div>
+          <div className="flex items-center gap-2 text-sm">
+            <Calendar className="h-4 w-4 text-muted-foreground" />
+            <span>Último mantenimiento: {conservador.ultimoMantenimiento}</span>
+          </div>
+          <Button
+            variant="outline"
+            className="w-full mt-4"
+            onClick={() => setShowDetails(true)}
+          >
+            <FileText className="h-4 w-4 mr-1" />
+            Detalles
           </Button>
-          <Button variant="outline" size="icon">
-            <Wrench className="h-4 w-4" />
-          </Button>
-        </div>
-      </CardFooter>
-    </Card>
+        </CardContent>
+      </Card>
+
+      {/* Modal de detalles */}
+      <Dialog open={showDetails} onOpenChange={setShowDetails}>
+        <DialogContent className="sm:max-w-[600px]">
+          <DialogHeader>
+            <DialogTitle>Detalles del Conservador</DialogTitle>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <h4 className="text-sm font-medium col-span-1">ID:</h4>
+              <p className="text-sm col-span-3">{conservador.id}</p>
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <h4 className="text-sm font-medium col-span-1">Modelo:</h4>
+              <p className="text-sm col-span-3">{conservador.modelo}</p>
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <h4 className="text-sm font-medium col-span-1">Capacidad:</h4>
+              <p className="text-sm col-span-3">{conservador.capacidad}</p>
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <h4 className="text-sm font-medium col-span-1">Cliente:</h4>
+              <p className="text-sm col-span-3">{conservador.cliente}</p>
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <h4 className="text-sm font-medium col-span-1">Ubicación:</h4>
+              <p className="text-sm col-span-3">{conservador.ubicacion}</p>
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <h4 className="text-sm font-medium col-span-1">Estado:</h4>
+              <p className="text-sm col-span-3">
+                <Badge variant={getStatusVariant()}>
+                  {conservador.estado.toUpperCase()}
+                </Badge>
+              </p>
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <h4 className="text-sm font-medium col-span-1">
+                Último mantenimiento:
+              </h4>
+              <p className="text-sm col-span-3">{conservador.ultimoMantenimiento}</p>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }

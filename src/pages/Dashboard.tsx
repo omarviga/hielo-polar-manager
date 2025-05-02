@@ -70,7 +70,7 @@ export function Dashboard() {
           </CardContent>
         </Card>
       </div>
-
+      
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Card>
           <CardHeader>
@@ -110,7 +110,7 @@ export function Dashboard() {
             <CardDescription>Últimas 24 horas</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
+        <div className="space-y-4">
               {[
                 {
                   title: 'Bajo rendimiento',
@@ -147,7 +147,7 @@ export function Dashboard() {
                   </div>
                 </div>
               ))}
-            </div>
+        </div>
           </CardContent>
         </Card>
       </div>

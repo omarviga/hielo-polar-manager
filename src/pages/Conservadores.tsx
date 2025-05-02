@@ -1,82 +1,38 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ConservadorCard, ConservadorData } from "@/components/conservadores/ConservadorCard";
+import { ConservadorCard } from "@/components/conservadores/ConservadorCard";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Plus, Search, SlidersHorizontal } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { ConservadorForm } from "@/components/conservadores/ConservadorForm";
 
-// Datos de ejemplo para conservadores
-const conservadoresData: ConservadorData[] = [
-  {
-    id: "2342",
-    modelo: "FrioMax 3000",
-    capacidad: "500L",
-    cliente: "Supermercados Norte",
-    ubicacion: "Av. Principal #123, Centro",
-    estado: "activo",
-    ultimoMantenimiento: "15/04/2023",
-  },
-  {
-    id: "1820",
-    modelo: "IceCold XL",
-    capacidad: "750L",
-    cliente: "Tiendas Express",
-    ubicacion: "Calle Reforma #45, Juárez",
-    estado: "mantenimiento",
-    ultimoMantenimiento: "02/03/2023",
-  },
-  {
-    id: "3188",
-    modelo: "FrioMax 2500",
-    capacidad: "350L",
-    cliente: "Cafetería El Mirador",
-    ubicacion: "Plaza Central #8, Centro",
-    estado: "activo",
-    ultimoMantenimiento: "20/04/2023",
-  },
-  {
-    id: "2754",
-    modelo: "IceCold Standard",
-    capacidad: "250L",
-    cliente: "Restaurante La Terraza",
-    ubicacion: "Av. de los Pinos #67, Las Flores",
-    estado: "inactivo",
-    ultimoMantenimiento: "10/01/2023",
-  },
-  {
-    id: "4102",
-    modelo: "FrioMax 3000",
-    capacidad: "500L",
-    cliente: "Hotel Panorama",
-    ubicacion: "Blvd. Costero #215, Zona Turística",
-    estado: "activo",
-    ultimoMantenimiento: "05/04/2023",
-  },
-  {
-    id: "1567",
-    modelo: "IceCold XL",
-    capacidad: "750L",
-    cliente: "Supermercado El Ahorro",
-    ubicacion: "Calle Morelos #78, Centro",
-    estado: "activo",
-    ultimoMantenimiento: "28/03/2023",
-  },
+interface ConservadorData {
+  id: string;
+  modelo: string;
+  capacidad: string;
+  cliente: string;
+  ubicacion: string;
+  estado: string;
+  ultimoMantenimiento: string;
+}
+
+const conservadorData: ConservadorData[] = [
+  // ... (tus datos existentes de conservadores)
 ];
 
 const Conservadores = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("todos");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const filteredConservadores = conservadoresData.filter((conservador) => {
-    // Filtro por término de búsqueda
+  const filteredConservadores = conservadorData.filter((conservador) => {
     const matchesSearch =
       conservador.id.includes(searchTerm) ||
       conservador.modelo.toLowerCase().includes(searchTerm.toLowerCase()) ||
       conservador.cliente.toLowerCase().includes(searchTerm.toLowerCase()) ||
       conservador.ubicacion.toLowerCase().includes(searchTerm.toLowerCase());
 
-    // Filtro por estado
     const matchesStatus =
       statusFilter === "todos" || conservador.estado === statusFilter;
 
@@ -116,7 +72,9 @@ const Conservadores = () => {
           <Button variant="outline" size="icon">
             <SlidersHorizontal className="h-4 w-4" />
           </Button>
-          <Button>
+          
+          {/* Botón para agregar nuevo conservador */}
+          <Button onClick={() => setIsDialogOpen(true)}>
             <Plus className="h-4 w-4 mr-1" />
             Nuevo
           </Button>
@@ -137,6 +95,19 @@ const Conservadores = () => {
           </p>
         </div>
       )}
+
+      {/* Modal para agregar nuevo conservador */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="sm:max-w-[600px]">
+          <DialogHeader>
+            <DialogTitle>Agregar Nuevo Conservador</DialogTitle>
+          </DialogHeader>
+          <ConservadorForm 
+            onSuccess={() => setIsDialogOpen(false)}
+            onCancel={() => setIsDialogOpen(false)}
+          />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

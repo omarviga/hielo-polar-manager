@@ -4,15 +4,14 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./components/layout/Layout";
-import { Dashboard } from '@/pages/Dashboard'
-import { ClientesPage } from '@/pages/ClientesPage'
-import { ConservadoresPage } from '@/pages/ConservadoresPage'
-import { OrdenesServicioPage } from '@/pages/OrdenesServicioPage'
-import { MantenimientoPage } from '@/pages/MantenimientoPage'
-import { ReportesPage } from '@/pages/ReportesPage'
-import QRCode from '@/pages/QRCode';
-import { EstadisticasPage } from '@/pages/EstadisticasPage'
-import { ConfiguracionPage } from '@/pages/ConfiguracionPage'
+import { Dashboard } from './pages/Dashboard';  // Cambiado a named import
+import Clientes from './pages/Clientes';    // Cambiado a default import
+import Conservadores from './pages/Conservadores';
+import { MantenimientoPage } from './pages/Mantenimiento';
+import { Reportes } from './pages/Reportes';
+import QRCode from './pages/QRCode';
+import { EstadisticasPage } from './pages/Estadisticas';
+import Configuracion from './pages/Configuracion';
 
 const queryClient = new QueryClient();
 
@@ -23,14 +22,12 @@ const App = () => (
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Dashboard />} />
-            <Route path="/clientes" element={<ClientesPage />} />
-            <Route path="/conservadores" element={<ConservadoresPage />} />
-            <Route path="/ordenes-servicio" element={<OrdenesServicioPage />} />
+            <Route path="/clientes" element={<Clientes />} />
+            <Route path="/conservadores" element={<Conservadores />} />
             <Route path="/mantenimiento" element={<MantenimientoPage />} />
-            <Route path="/reportes" element={<ReportesPage />} />
-            <Route path="/estadisticas" element={<EstadisticasPage />} />
-            <Route path="/configuracion" element={<ConfiguracionPage />} />
-            <Route path="/qr" element={<QRCode />} /> {/* Nueva ruta */}
+            <Route path="/reportes" element={<Reportes />} />
+            <Route path="/configuracion" element={<Configuracion />} />
+            <Route path="/qr" element={<QRCode />} />
           </Route>
         </Routes>
         <Toaster />
