@@ -64,12 +64,12 @@ export const generateOrdenServicioPDF = async (orden: OrdenServicioWithDetails) 
     ['RFC:', orden.conservador?.cliente?.rfc || 'N/A'],
   ]
   doc.autoTable({
-    startY: 50,
+    startY: doc.lastAutoTable ? doc.lastAutoTable.finalY + 20 : 50,
     head: [],
     body: clienteInfo,
     theme: 'plain',
     margin: { left: margin },
-  })
+  });
 
   doc.text('Datos del Proveedor:', margin, doc.lastAutoTable.finalY + 15)
   const proveedorInfo = [
