@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabaseClient"; // Asegúrate de tener configurado Supabase
+import { supabase } from "../lib/supabaseClient"; // Asegúrate de tener configurado Supabase
 
 export function ClientesPage() {
   const [clientes, setClientes] = useState([]);

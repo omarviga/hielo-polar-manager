@@ -1,10 +1,19 @@
 import jsPDF from 'jspdf'
-import 'jspdf-autotable'
+import autoTable from 'jspdf-autotable'
+
+// Extend jsPDF to include autoTable
+interface jsPDFWithAutoTable extends jsPDF {
+  autoTable: typeof autoTable
+}
+
+// Ensure autoTable is properly added to jsPDF
+const jsPDFWithPlugin = jsPDF as unknown as jsPDFWithAutoTable;
+autoTable(jsPDFWithPlugin);
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
 import type { Tables } from '@/integrations/supabase/types'
 
-type OrdenServicioWithDetails = Tables['ordenes_servicio'] & {
+type OrdenServicioWithDetails = Tables<'ordenes_servicio'> & {
   conservador?: {
     id: string
     numero_serie: string
@@ -36,8 +45,9 @@ type OrdenServicioWithDetails = Tables['ordenes_servicio'] & {
 }
 
 export const generateOrdenServicioPDF = async (orden: OrdenServicioWithDetails) => {
-  const doc = new jsPDF()
-  const pageWidth = doc.internal.pageSize.width
+  // Create an instance of jsPDF
+  const doc = new jsPDF();
+  const pageWidth = doc.internal.pageSize.width;
   const margin = 20
 
   // Título y número de orden
