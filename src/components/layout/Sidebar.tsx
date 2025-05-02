@@ -1,17 +1,16 @@
-
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { 
-  Menu, 
-  X, 
-  Package, 
-  Users, 
-  LayoutDashboard, 
-  FileText, 
-  Settings, 
-  ChevronRight, 
+import {
+  Menu,
+  X,
+  Package,
+  Users,
+  LayoutDashboard,
+  FileText,
+  Settings,
+  ChevronRight,
   ChevronLeft,
   Wrench,
   QrCode,
@@ -56,7 +55,7 @@ export default function Sidebar() {
 
       {/* Mobile sidebar overlay */}
       {mobileOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/20 z-30 md:hidden"
           onClick={() => setMobileOpen(false)}
         />
@@ -113,7 +112,7 @@ export default function Sidebar() {
           ))}
         </nav>
 
-        <div className="p-3 border-t">
+        <div className="p-4 border-t">
           <div className={cn("flex items-center", !expanded && "justify-center")}>
             <div className="rounded-full h-8 w-8 bg-hielo-800 flex items-center justify-center text-white">
               A
