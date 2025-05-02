@@ -10,6 +10,7 @@ import Layout from "./components/layout/Layout";
 import Index from "./pages/Index";
 import Conservadores from "./pages/Conservadores";
 import Clientes from "./pages/Clientes";
+import QRCode from "./pages/QRCode";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,6 +26,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/conservadores" element={<Conservadores />} />
             <Route path="/clientes" element={<Clientes />} />
+            <Route path="/qr" element={<QRCode />} />
             {/* Rutas adicionales se agregarán aquí */}
           </Route>
           <Route path="*" element={<NotFound />} />

@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MapPin, QrCode, Wrench, FileText } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export interface ConservadorData {
   id: string;
@@ -19,6 +20,8 @@ interface ConservadorCardProps {
 }
 
 export function ConservadorCard({ conservador }: ConservadorCardProps) {
+  const navigate = useNavigate();
+  
   const getStatusColor = (estado: string) => {
     switch (estado) {
       case "activo":
@@ -30,6 +33,11 @@ export function ConservadorCard({ conservador }: ConservadorCardProps) {
       default:
         return "bg-gray-100 text-gray-800 hover:bg-gray-200";
     }
+  };
+
+  const handleQrClick = () => {
+    // Navigate to QR page with conservador ID pre-filled
+    navigate(`/qr?id=${conservador.id}`);
   };
 
   return (
@@ -67,7 +75,7 @@ export function ConservadorCard({ conservador }: ConservadorCardProps) {
           Detalles
         </Button>
         <div className="flex gap-2">
-          <Button variant="outline" size="icon">
+          <Button variant="outline" size="icon" onClick={handleQrClick}>
             <QrCode className="h-4 w-4" />
           </Button>
           <Button variant="outline" size="icon">
