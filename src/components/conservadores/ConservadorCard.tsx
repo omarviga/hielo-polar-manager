@@ -2,7 +2,7 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MapPin, QrCode, Tool, FileText } from "lucide-react";
+import { MapPin, QrCode, Wrench, FileText } from "lucide-react";
 
 export interface ConservadorData {
   id: string;
@@ -71,7 +71,7 @@ export function ConservadorCard({ conservador }: ConservadorCardProps) {
             <QrCode className="h-4 w-4" />
           </Button>
           <Button variant="outline" size="icon">
-            <Tool className="h-4 w-4" />
+            <Wrench className="h-4 w-4" />
           </Button>
         </div>
       </CardFooter>

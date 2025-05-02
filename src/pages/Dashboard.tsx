@@ -1,5 +1,5 @@
 
-import { Package, Users, Tool, TrendingUp } from "lucide-react";
+import { Package, Users, Wrench, TrendingUp } from "lucide-react";
 import { StatsCard } from "@/components/dashboard/StatsCard";
 import { RecentActivity } from "@/components/dashboard/RecentActivity";
 import { StatusChart } from "@/components/dashboard/StatusChart";
@@ -28,7 +28,7 @@ const Dashboard = () => {
           title="Mantenimientos"
           value="8"
           description="Pendientes este mes"
-          icon={Tool}
+          icon={Wrench}
           iconColor="text-amber-500"
           trend={{ value: 2, isPositive: false }}
         />
