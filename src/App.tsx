@@ -10,6 +10,7 @@ import Conservadores from './pages/Conservadores';
 import { MantenimientoPage } from './pages/Mantenimiento';
 import { Reportes } from './pages/Reportes';
 import QRCode from './pages/QRCode';
+import Reparaciones from './pages/Repairs'; // Cambiado a default import
 import { EstadisticasPage } from './pages/Estadisticas';
 import Configuracion from './pages/Configuracion';
 
@@ -27,6 +28,8 @@ const App = () => (
             <Route path="/mantenimiento" element={<MantenimientoPage />} />
             <Route path="/reportes" element={<Reportes />} />
             <Route path="/configuracion" element={<Configuracion />} />
+            <Route path="/estadisticas" element={<EstadisticasPage />} />
+            <Route path="/reparaciones" element={<Reparaciones />} />
             <Route path="/qr" element={<QRCode />} />
           </Route>
         </Routes>
