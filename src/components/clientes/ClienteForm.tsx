@@ -31,6 +31,7 @@ import {
 import { Plus, MapPin, User, Store, FileText } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { FileUpload } from "@/components/ui/file-upload"; // Asegúrate de que la ruta sea correcta
 
 // Esquema de validación con Zod
 const formSchema = z.object({
@@ -157,10 +158,13 @@ export function ClienteForm({ onSuccess, onCancel }: { onSuccess: () => void; on
                       <FormItem>
                         <FormLabel>Imagen del Negocio</FormLabel>
                         <FormControl>
-                          <Input
-                            type="file"
+                          <FileUpload
                             accept="image/*"
-                            onChange={(e) => field.onChange(e.target.files?.[0] || null)}
+                            onChange={field.onChange}
+                            value={field.value}
+                            label=""
+                            variant="image"
+                            placeholder="Seleccionar imagen..."
                           />
                         </FormControl>
                         <FormMessage />
@@ -416,9 +420,9 @@ export function ClienteForm({ onSuccess, onCancel }: { onSuccess: () => void; on
                       name="ubicacion.municipio"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Municipio/Comunidad</FormLabel>
+                          <FormLabel>Municipio/Alcaldía</FormLabel>
                           <FormControl>
-                            <Input placeholder="Municipio o comunidad" {...field} />
+                            <Input placeholder="Municipio o alcaldía" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -493,10 +497,12 @@ export function ClienteForm({ onSuccess, onCancel }: { onSuccess: () => void; on
                       <FormItem>
                         <FormLabel>Contrato Comodato*</FormLabel>
                         <FormControl>
-                          <Input
-                            type="file"
+                          <FileUpload
                             accept=".pdf,.jpg,.jpeg,.png"
-                            onChange={(e) => field.onChange(e.target.files?.[0] || null)}
+                            onChange={field.onChange}
+                            value={field.value}
+                            label=""
+                            placeholder="Seleccionar archivo..."
                           />
                         </FormControl>
                         <FormMessage />
@@ -511,10 +517,12 @@ export function ClienteForm({ onSuccess, onCancel }: { onSuccess: () => void; on
                       <FormItem>
                         <FormLabel>Identificación Oficial*</FormLabel>
                         <FormControl>
-                          <Input
-                            type="file"
+                          <FileUpload
                             accept=".pdf,.jpg,.jpeg,.png"
-                            onChange={(e) => field.onChange(e.target.files?.[0] || null)}
+                            onChange={field.onChange}
+                            value={field.value}
+                            label=""
+                            placeholder="Seleccionar archivo..."
                           />
                         </FormControl>
                         <FormMessage />
@@ -529,10 +537,12 @@ export function ClienteForm({ onSuccess, onCancel }: { onSuccess: () => void; on
                       <FormItem>
                         <FormLabel>Comprobante de Domicilio*</FormLabel>
                         <FormControl>
-                          <Input
-                            type="file"
+                          <FileUpload
                             accept=".pdf,.jpg,.jpeg,.png"
-                            onChange={(e) => field.onChange(e.target.files?.[0] || null)}
+                            onChange={field.onChange}
+                            value={field.value}
+                            label=""
+                            placeholder="Seleccionar archivo..."
                           />
                         </FormControl>
                         <FormMessage />
