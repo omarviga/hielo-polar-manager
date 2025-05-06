@@ -170,108 +170,95 @@ const Clientes: React.FC = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="nombre" className="text-right">
-                    Nombre
-                  </Label>
-                  <Input
-                    id="nombre"
-                    name="nombre"
-                    value={nuevoCliente.nombre}
-                    onChange={handleInputChange}
-                    className="col-span-3"
-                  />
+              <form className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <Label htmlFor="nombre">Nombre</Label>
+                    <Input
+                      id="nombre"
+                      name="nombre"
+                      value={nuevoCliente.nombre}
+                      onChange={handleInputChange}
+                      placeholder="Ingrese el nombre del cliente"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="contacto">Contacto</Label>
+                    <Input
+                      id="contacto"
+                      name="contacto"
+                      value={nuevoCliente.contacto}
+                      onChange={handleInputChange}
+                      placeholder="Ingrese el contacto"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      name="email"
+                      value={nuevoCliente.email}
+                      onChange={handleInputChange}
+                      placeholder="Ingrese el email"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="telefono">Teléfono</Label>
+                    <Input
+                      id="telefono"
+                      name="telefono"
+                      value={nuevoCliente.telefono}
+                      onChange={handleInputChange}
+                      placeholder="Ingrese el teléfono"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="direccion">Dirección</Label>
+                    <Input
+                      id="direccion"
+                      name="direccion"
+                      value={nuevoCliente.direccion}
+                      onChange={handleInputChange}
+                      placeholder="Ingrese la dirección"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="conservadores">Conservadores</Label>
+                    <Input
+                      id="conservadores"
+                      name="conservadores"
+                      type="number"
+                      value={nuevoCliente.conservadores}
+                      onChange={handleInputChange}
+                      placeholder="Ingrese el número de conservadores"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="negocioImagen">Imagen del Negocio</Label>
+                    <FileInput
+                      id="negocioImagen"
+                      name="negocioImagen"
+                      label="Seleccionar archivo"
+                      onChange={handleFileChange}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="contratoPdf">Contrato PDF</Label>
+                    <FileInput
+                      id="contratoPdf"
+                      name="contratoPdf"
+                      label="Seleccionar archivo"
+                      onChange={handleFileChange}
+                    />
+                  </div>
                 </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="contacto" className="text-right">
-                    Contacto
-                  </Label>
-                  <Input
-                    id="contacto"
-                    name="contacto"
-                    value={nuevoCliente.contacto}
-                    onChange={handleInputChange}
-                    className="col-span-3"
-                  />
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="email" className="text-right">
-                    Email
-                  </Label>
-                  <Input
-                    id="email"
-                    name="email"
-                    value={nuevoCliente.email}
-                    onChange={handleInputChange}
-                    className="col-span-3"
-                  />
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="telefono" className="text-right">
-                    Teléfono
-                  </Label>
-                  <Input
-                    id="telefono"
-                    name="telefono"
-                    value={nuevoCliente.telefono}
-                    onChange={handleInputChange}
-                    className="col-span-3"
-                  />
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="direccion" className="text-right">
-                    Dirección
-                  </Label>
-                  <Input
-                    id="direccion"
-                    name="direccion"
-                    value={nuevoCliente.direccion}
-                    onChange={handleInputChange}
-                    className="col-span-3"
-                  />
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="conservadores" className="text-right">
-                    Conservadores
-                  </Label>
-                  <Input
-                    id="conservadores"
-                    name="conservadores"
-                    type="number"
-                    value={nuevoCliente.conservadores}
-                    onChange={handleInputChange}
-                    className="col-span-3"
-                  />
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="negocioImagen" className="text-right">
-                    Imagen del Negocio
-                  </Label>
-                  <FileInput
-                    id="negocioImagen"
-                    name="negocioImagen"
-                    label="Seleccionar archivo"
-                    onChange={handleFileChange}
-                    className="col-span-3"
-                  />
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="contratoPdf" className="text-right">
-                    Contrato PDF
-                  </Label>
-                  <FileInput
-                    id="contratoPdf"
-                    name="contratoPdf"
-                    label="Seleccionar archivo"
-                    onChange={handleFileChange}
-                    className="col-span-3"
-                  />
-                </div>
-              </div>
-              <Button onClick={agregarCliente} className="bg-polar-600 hover:bg-polar-700">
-                Agregar Cliente
-              </Button>
+                <Button
+                  onClick={agregarCliente}
+                  className="w-full bg-polar-600 hover:bg-polar-700"
+                >
+                  Agregar Cliente
+                </Button>
+              </form>
             </CardContent>
           </Card>
         </TabsContent>
