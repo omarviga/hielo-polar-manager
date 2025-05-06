@@ -1,12 +1,10 @@
-
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PlusCircle, ClipboardList, Clock, CheckCircle } from "lucide-react";
 import NewRepairOrder from '@/components/repairs/NewRepairOrder';
-import ActiveRepairOrders from '@/components/repairs/ActiveRepairOrders';
-import Technicians from '@/components/repairs/Technicians';
+import Technicians from "@/components/repairs/Technicians";
 import RepairReports from '@/components/repairs/RepairReports';
 
 const Repairs: React.FC = () => {
@@ -50,15 +48,15 @@ const Repairs: React.FC = () => {
                 </TabsList>
 
                 <TabsContent value="pending">
-                  <ActiveRepairOrders status="pending" />
+                  <p>No hay datos disponibles para órdenes pendientes.</p>
                 </TabsContent>
 
                 <TabsContent value="in-progress">
-                  <ActiveRepairOrders status="in-progress" />
+                  <p>No hay datos disponibles para órdenes en progreso.</p>
                 </TabsContent>
 
                 <TabsContent value="completed">
-                  <ActiveRepairOrders status="completed" />
+                  <p>No hay datos disponibles para órdenes terminadas.</p>
                 </TabsContent>
               </Tabs>
             </CardContent>
@@ -102,7 +100,7 @@ const Repairs: React.FC = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <ActiveRepairOrders status="all" />
+              <p>No hay datos disponibles para el historial de reparaciones.</p>
             </CardContent>
           </Card>
         </TabsContent>
