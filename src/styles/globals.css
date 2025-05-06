@@ -1,0 +1,39 @@
+/* Configuración para modo estándar */
+@-ms-viewport {
+    width: device-width;
+}
+
+/* Configuración global de box-sizing */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Ajustes de texto y compatibilidad entre navegadores */
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+/* Fix user selection compatibility for Safari and other browsers */
+.user-select-none {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.user-select-text {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+.user-select-all {
+    -webkit-user-select: all;
+    -moz-user-select: all;
+    -ms-user-select: all;
+    user-select: all;
+}
