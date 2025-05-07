@@ -31,7 +31,7 @@ import {
 import { Plus, MapPin, User, Store, FileText } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { FileUpload } from "@/components/ui/file-upload"; // Asegúrate de que la ruta sea correcta
+import { FileUpload } from "@/components/ui/fileupload"; // Asegúrate de que la ruta sea correcta
 
 // Esquema de validación con Zod
 const formSchema = z.object({
