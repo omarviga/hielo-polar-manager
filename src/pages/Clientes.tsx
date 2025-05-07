@@ -133,7 +133,12 @@ const Clientes: React.FC = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <ClienteForm onSubmit={agregarCliente} />
+              <ClienteForm
+                onSuccess={() => {
+                  agregarCliente(/* lógica para obtener los datos del cliente */);
+                }}
+                onCancel={() => setIsDialogOpen(false)}
+              />
             </CardContent>
           </Card>
         </TabsContent>
@@ -143,7 +148,12 @@ const Clientes: React.FC = () => {
           <DialogHeader>
             <DialogTitle>Agregar Nuevo Cliente</DialogTitle>
           </DialogHeader>
-          <ClienteForm onSubmit={agregarCliente} />
+          <ClienteForm
+            onSuccess={() => {
+              agregarCliente(/* lógica para obtener los datos del cliente */);
+            }}
+            onCancel={() => setIsDialogOpen(false)}
+          />
         </DialogContent>
       </Dialog>
     </div>
