@@ -420,9 +420,9 @@ export function ClienteForm({ onSuccess, onCancel }: { onSuccess: () => void; on
                       name="ubicacion.municipio"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Municipio/Alcaldía</FormLabel>
+                          <FormLabel>Municipio/Comunidad</FormLabel>
                           <FormControl>
-                            <Input placeholder="Municipio o alcaldía" {...field} />
+                            <Input placeholder="Municipio o comunidad" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
