@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { FileInput } from "@/components/ui/file-input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
@@ -14,7 +15,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Label } from "@/components/ui/label";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import FileInput from "@/components/ui/FileInput";
+import { ClienteForm } from "@/components/clientes/ClienteForm";
 
 interface Cliente {
   id: string;
@@ -37,51 +38,13 @@ const Clientes: React.FC = () => {
   const [clientes, setClientes] = useState(clientesData);
   const [searchTerm, setSearchTerm] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [nuevoCliente, setNuevoCliente] = useState<Omit<Cliente, "id">>({
-    nombre: "",
-    contacto: "",
-    email: "",
-    telefono: "",
-    direccion: "",
-    conservadores: 0,
-    negocioImagen: null,
-    contratoPdf: null,
-  });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setNuevoCliente((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, files } = e.target;
-    if (files && files.length > 0) {
-      setNuevoCliente((prev) => ({
-        ...prev,
-        [name]: files[0],
-      }));
-    }
-  };
-
-  const agregarCliente = () => {
+  const agregarCliente = (nuevoCliente: Omit<Cliente, "id">) => {
     const nuevoId = `C${(clientes.length + 1).toString().padStart(3, "0")}`;
     const clienteCompleto = { ...nuevoCliente, id: nuevoId };
 
     setClientes([...clientes, clienteCompleto]);
     setIsDialogOpen(false);
-    setNuevoCliente({
-      nombre: "",
-      contacto: "",
-      email: "",
-      telefono: "",
-      direccion: "",
-      conservadores: 0,
-      negocioImagen: null,
-      contratoPdf: null,
-    });
   };
 
   const filteredClientes = clientes.filter((cliente) =>
@@ -170,95 +133,7 @@ const Clientes: React.FC = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <form className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <Label htmlFor="nombre">Nombre</Label>
-                    <Input
-                      id="nombre"
-                      name="nombre"
-                      value={nuevoCliente.nombre}
-                      onChange={handleInputChange}
-                      placeholder="Ingrese el nombre del cliente"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="contacto">Contacto</Label>
-                    <Input
-                      id="contacto"
-                      name="contacto"
-                      value={nuevoCliente.contacto}
-                      onChange={handleInputChange}
-                      placeholder="Ingrese el contacto"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      name="email"
-                      value={nuevoCliente.email}
-                      onChange={handleInputChange}
-                      placeholder="Ingrese el email"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="telefono">Teléfono</Label>
-                    <Input
-                      id="telefono"
-                      name="telefono"
-                      value={nuevoCliente.telefono}
-                      onChange={handleInputChange}
-                      placeholder="Ingrese el teléfono"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="direccion">Dirección</Label>
-                    <Input
-                      id="direccion"
-                      name="direccion"
-                      value={nuevoCliente.direccion}
-                      onChange={handleInputChange}
-                      placeholder="Ingrese la dirección"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="conservadores">Conservadores</Label>
-                    <Input
-                      id="conservadores"
-                      name="conservadores"
-                      type="number"
-                      value={nuevoCliente.conservadores}
-                      onChange={handleInputChange}
-                      placeholder="Ingrese el número de conservadores"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="negocioImagen">Imagen del Negocio</Label>
-                    <FileInput
-                      id="negocioImagen"
-                      name="negocioImagen"
-                      label="Seleccionar archivo"
-                      onChange={handleFileChange}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="contratoPdf">Contrato PDF</Label>
-                    <FileInput
-                      id="contratoPdf"
-                      name="contratoPdf"
-                      label="Seleccionar archivo"
-                      onChange={handleFileChange}
-                    />
-                  </div>
-                </div>
-                <Button
-                  onClick={agregarCliente}
-                  className="w-full bg-polar-600 hover:bg-polar-700"
-                >
-                  Agregar Cliente
-                </Button>
-              </form>
+              <ClienteForm onSubmit={agregarCliente} />
             </CardContent>
           </Card>
         </TabsContent>
@@ -268,108 +143,7 @@ const Clientes: React.FC = () => {
           <DialogHeader>
             <DialogTitle>Agregar Nuevo Cliente</DialogTitle>
           </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="nombre" className="text-right">
-                Nombre
-              </Label>
-              <Input
-                id="nombre"
-                name="nombre"
-                value={nuevoCliente.nombre}
-                onChange={handleInputChange}
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="contacto" className="text-right">
-                Contacto
-              </Label>
-              <Input
-                id="contacto"
-                name="contacto"
-                value={nuevoCliente.contacto}
-                onChange={handleInputChange}
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="email" className="text-right">
-                Email
-              </Label>
-              <Input
-                id="email"
-                name="email"
-                value={nuevoCliente.email}
-                onChange={handleInputChange}
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="telefono" className="text-right">
-                Teléfono
-              </Label>
-              <Input
-                id="telefono"
-                name="telefono"
-                value={nuevoCliente.telefono}
-                onChange={handleInputChange}
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="direccion" className="text-right">
-                Dirección
-              </Label>
-              <Input
-                id="direccion"
-                name="direccion"
-                value={nuevoCliente.direccion}
-                onChange={handleInputChange}
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="conservadores" className="text-right">
-                Conservadores
-              </Label>
-              <Input
-                id="conservadores"
-                name="conservadores"
-                type="number"
-                value={nuevoCliente.conservadores}
-                onChange={handleInputChange}
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="negocioImagen" className="text-right">
-                Imagen del Negocio
-              </Label>
-              <FileInput
-                id="negocioImagen"
-                name="negocioImagen"
-                label="Seleccionar archivo"
-                onChange={handleFileChange}
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="contratoPdf" className="text-right">
-                Contrato PDF
-              </Label>
-              <FileInput
-                id="contratoPdf"
-                name="contratoPdf"
-                label="Seleccionar archivo"
-                onChange={handleFileChange}
-                className="col-span-3"
-              />
-            </div>
-          </div>
-          <Button onClick={agregarCliente} className="bg-polar-600 hover:bg-polar-700">
-            Agregar Cliente
-          </Button>
+          <ClienteForm onSubmit={agregarCliente} />
         </DialogContent>
       </Dialog>
     </div>

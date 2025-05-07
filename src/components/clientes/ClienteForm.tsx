@@ -187,7 +187,7 @@ export function ClienteForm({ onSuccess, onCancel }: { onSuccess: () => void; on
                           <SelectContent>
                             <SelectItem value="restaurante">Restaurante</SelectItem>
                             <SelectItem value="abarrotes">Abarrotes</SelectItem>
-                            <SelectItem value="tienda">Tienda</SelectItem>
+                            <SelectItem value="vinateria">Vinatería</SelectItem>
                             <SelectItem value="supermercado">Supermercado</SelectItem>
                             <SelectItem value="otro">Otro</SelectItem>
                           </SelectContent>
