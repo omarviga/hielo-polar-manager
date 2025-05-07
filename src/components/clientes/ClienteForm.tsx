@@ -518,7 +518,7 @@ export function ClienteForm({ onSuccess, onCancel }: { onSuccess: () => void; on
                         <FormLabel>Identificación Oficial*</FormLabel>
                         <FormControl>
                           <FileUpload
-                            accept=".pdf,.jpg,.jpeg,.png"
+                            accept=".pdf,.jpg,.jpeg,.png, webp"
                             onChange={field.onChange}
                             value={field.value}
                             label=""
